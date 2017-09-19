@@ -134,10 +134,9 @@ boot-most-recent-release-gsc-boot: fake_target
 	$(GIT) archive tags/$(PACKAGE_VERSION) | (cd boot && tar xf -)
 	cd boot && \
 	./configure CC='$(C_COMPILER)' && \
-	sed -i -e 's|#define HAVE_CLOCK_GETTIME 1||g' ../include/config.h && \
-	sed -i -e 's|/* #undef HAVE_GETCLOCK */|#undef HAVE_GETCLOCK|g' ../include/config.h && \
+	sed -i -e 's|#define HAVE_CLOCK_GETTIME 1|#define HAVE_CLOCK_GETTIME 0|g' ../include/config.h && \
+	sed -i -e 's|#define HAVE_CLOCK_GETTIME 1|#undef HAVE_CLOCK_GETTIME|g' include/config.h && \
 	$(MAKE) bootstrap
-
 
 boot-wip-compiler: fake_target
 	@if test -x "boot/gsc/gsc" && \
