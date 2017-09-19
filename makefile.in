@@ -134,6 +134,10 @@ boot-most-recent-release-gsc-boot: fake_target
 	$(GIT) archive tags/$(PACKAGE_VERSION) | (cd boot && tar xf -)
 	cd boot && \
 	./configure CC='$(C_COMPILER)' && \
+	sed -i -e 's|#define HAVE_CLOCK_GETTIME 1||g' \
+	-e 's|#define HAVE_CLOCK_GETTIME 1||g' \
+	-e 's|/* #undef HAVE_GETCLOCK */|#undef HAVE_GETCLOCK|g' \
+	~/gambit/include/config.h && \
 	$(MAKE) bootstrap
 
 boot-wip-compiler: fake_target
